@@ -1,7 +1,7 @@
 import { RegisterFormData } from './pages/Register';
 import { signInFormData } from './pages/SignIn';
 
-const API_BASE_URL = 'http://localhost:3000' || '';
+const API_BASE_URL = import.meta.env.API_BASE_URL || '';
 
 export const register = async (formData: RegisterFormData) => {
   const res = await fetch(`${API_BASE_URL}/api/users/register`, {
