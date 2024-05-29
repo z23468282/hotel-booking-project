@@ -8,9 +8,9 @@ const router = express.Router();
 router.post(
   '/register',
   [
-    check('firstName', '必須填寫姓氏').isString(),
-    check('lastName', '必須填寫名子').isString(),
-    check('email', '必須填寫信箱').isEmail(),
+    check('firstName', '請填寫姓氏').isString(),
+    check('lastName', '請填寫名子').isString(),
+    check('email', '請填寫信箱').isEmail(),
     check('password', '密碼必須大於6個字元').isLength({ min: 6 }),
   ],
   async (req: Request, res: Response) => {

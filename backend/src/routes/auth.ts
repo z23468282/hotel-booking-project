@@ -10,7 +10,7 @@ const router = express.Router();
 router.post(
   '/login',
   [
-    check('email', '信箱格式有問題').isEmail(),
+    check('email', '請填寫信箱').isEmail(),
     check('password', '密碼必須大於6個字元').isLength({ min: 6 }),
   ],
   async (req: Request, res: Response) => {

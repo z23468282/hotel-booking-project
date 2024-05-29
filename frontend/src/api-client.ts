@@ -1,7 +1,8 @@
 import { RegisterFormData } from './pages/Register';
 import { signInFormData } from './pages/SignIn';
 
-const API_BASE_URL = import.meta.env.API_BASE_URL || '';
+// const API_BASE_URL = import.meta.env.API_BASE_URL || '';
+const API_BASE_URL = 'http://localhost:3000';
 
 export const register = async (formData: RegisterFormData) => {
   const res = await fetch(`${API_BASE_URL}/api/users/register`, {
@@ -57,4 +58,18 @@ export const signOut = async () => {
   if (!res.ok) {
     throw new Error('登出時發生問題');
   }
+};
+
+export const addMyHotel = async (hotelFormData: FormData) => {
+  const res = await fetch(`${API_BASE_URL}/api/my-hotels`, {
+    method: 'POST',
+    credentials: 'include',
+    body: hotelFormData,
+  });
+
+  if (!res.ok) {
+    throw new Error('新增旅店失敗');
+  }
+
+  return res.json();
 };
