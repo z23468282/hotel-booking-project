@@ -1,5 +1,6 @@
 import { RegisterFormData } from './pages/Register';
 import { signInFormData } from './pages/SignIn';
+import { HotelType } from '../../backend/src/shared/types';
 
 // const API_BASE_URL = import.meta.env.API_BASE_URL || '';
 const API_BASE_URL = 'http://localhost:3000';
@@ -68,7 +69,19 @@ export const addMyHotel = async (hotelFormData: FormData) => {
   });
 
   if (!res.ok) {
-    throw new Error('新增旅店失敗');
+    throw new Error('新增飯店失敗');
+  }
+
+  return res.json();
+};
+
+export const fetchMyHotels = async (): Promise<HotelType[]> => {
+  const res = await fetch(`${API_BASE_URL}/api/my-hotels`, {
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new Error('獲取資訊失敗');
   }
 
   return res.json();

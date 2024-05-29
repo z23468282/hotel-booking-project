@@ -40,5 +40,20 @@ test('允許用戶添加酒店', async ({ page }) => {
   ]);
 
   await page.getByRole('button', { name: '保存' }).click();
-  await expect(page.getByText('已保存旅店!')).toBeVisible();
+  await expect(page.getByText('已保存飯店!')).toBeVisible();
+});
+
+test('應該顯示飯店', async ({ page }) => {
+  await page.goto(`${UI_URL}my-hotels`);
+
+  await expect(page.getByText('測試名稱')).toBeVisible();
+  await expect(page.getByText('測試描述....')).toBeVisible();
+  await expect(page.getByText('測試城市')).toBeVisible();
+  await expect(page.getByText('汽車旅館')).toBeVisible();
+  await expect(page.getByText('5000 每晚')).toBeVisible();
+  await expect(page.getByText('2 成人, 1 兒童')).toBeVisible();
+  await expect(page.getByText('3 星級')).toBeVisible();
+
+  await expect(page.getByRole('link', { name: '詳細資訊' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '新增飯店' })).toBeVisible();
 });

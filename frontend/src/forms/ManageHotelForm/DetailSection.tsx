@@ -9,7 +9,7 @@ const DetailSection = () => {
 
   return (
     <div className="flex flex-col gap-4 ">
-      <h1 className="text-3xl font-bold mb-3 ">新增旅店</h1>
+      <h1 className="text-3xl font-bold mb-3 ">新增飯店</h1>
       <label className="text-gray-700 text-sm font-bold flex-1">
         名稱
         <input
