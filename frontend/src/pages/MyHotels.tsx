@@ -16,7 +16,7 @@ const MyHotels = () => {
       },
     }
   );
-  console.log(hotelData);
+
   if (!hotelData) {
     return <span>沒有找到飯店</span>;
   }

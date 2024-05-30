@@ -17,7 +17,7 @@ test('允許用戶登入', async ({ page }) => {
 
   await expect(page.getByText('登入成功')).toBeVisible();
   await expect(page.getByRole('link', { name: '我的預訂' })).toBeVisible();
-  await expect(page.getByRole('link', { name: '我的旅館' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '我的飯店' })).toBeVisible();
   await expect(page.getByRole('button', { name: '登出' })).toBeVisible();
 });
 
@@ -43,6 +43,6 @@ test('允許用戶註冊', async ({ page }) => {
 
   await expect(page.getByText('註冊成功')).toBeVisible();
   await expect(page.getByRole('link', { name: '我的預訂' })).toBeVisible();
-  await expect(page.getByRole('link', { name: '我的旅館' })).toBeVisible();
+  await expect(page.getByRole('link', { name: '我的飯店' })).toBeVisible();
   await expect(page.getByRole('button', { name: '登出' })).toBeVisible();
 });

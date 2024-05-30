@@ -86,3 +86,32 @@ export const fetchMyHotels = async (): Promise<HotelType[]> => {
 
   return res.json();
 };
+
+export const fetchMyHotelById = async (hotelId: string): Promise<HotelType> => {
+  const res = await fetch(`${API_BASE_URL}/api/my-hotels/${hotelId}`, {
+    credentials: 'include',
+  });
+
+  if (!res.ok) {
+    throw new Error('獲取飯店資料失敗');
+  }
+
+  return res.json();
+};
+
+export const updateMyHotelById = async (hotelFormData: FormData) => {
+  const res = await fetch(
+    `${API_BASE_URL}/api/my-hotels/${hotelFormData.get('hotelId')}`,
+    {
+      method: 'PUT',
+      body: hotelFormData,
+      credentials: 'include',
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('更新資料失敗');
+  }
+
+  return res.json();
+};

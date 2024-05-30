@@ -46,14 +46,33 @@ test('允許用戶添加酒店', async ({ page }) => {
 test('應該顯示飯店', async ({ page }) => {
   await page.goto(`${UI_URL}my-hotels`);
 
-  await expect(page.getByText('測試名稱')).toBeVisible();
-  await expect(page.getByText('測試描述....')).toBeVisible();
-  await expect(page.getByText('測試城市')).toBeVisible();
-  await expect(page.getByText('汽車旅館')).toBeVisible();
-  await expect(page.getByText('5000 每晚')).toBeVisible();
-  await expect(page.getByText('2 成人, 1 兒童')).toBeVisible();
-  await expect(page.getByText('3 星級')).toBeVisible();
+  await expect(page.getByText('e2e測試名稱').first()).toBeVisible();
+  await expect(page.getByText('測試描述....').first()).toBeVisible();
+  await expect(page.getByText('測試城市').first()).toBeVisible();
+  await expect(page.getByText('汽車旅館').first()).toBeVisible();
+  await expect(page.getByText('5000 每晚').first()).toBeVisible();
+  await expect(page.getByText('2 成人, 1 兒童').first()).toBeVisible();
+  await expect(page.getByText('3 星級').first()).toBeVisible();
 
-  await expect(page.getByRole('link', { name: '詳細資訊' })).toBeVisible();
+  await expect(
+    page.getByRole('link', { name: '詳細資訊' }).first()
+  ).toBeVisible();
   await expect(page.getByRole('link', { name: '新增飯店' })).toBeVisible();
+});
+
+test('可以編輯飯店', async ({ page }) => {
+  await page.goto(`${UI_URL}my-hotels`);
+
+  await page.getByRole('link', { name: '詳細資訊' }).first().click();
+
+  await page.waitForSelector('[name="name"]', { state: 'attached' });
+  await expect(page.locator('[name="name"]')).toHaveValue('e2e測試名稱');
+  await page.locator('[name="name"]').fill('e2e測試名稱1');
+  await page.getByRole('button', { name: '保存' }).click();
+  await expect(page.getByText('更新成功')).toBeVisible();
+
+  await page.getByRole('link', { name: '詳細資訊' }).first().click();
+  await expect(page.locator('[name="name"]')).toHaveValue('e2e測試名稱1');
+  await page.locator('[name="name"]').fill('e2e測試名稱');
+  await page.getByRole('button', { name: '保存' }).click();
 });
