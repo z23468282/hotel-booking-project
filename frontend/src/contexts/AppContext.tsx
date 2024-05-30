@@ -25,15 +25,14 @@ export const AppContextProvider = ({
     retry: false,
   });
 
+  const value = {
+    showToast: (toastMessage) => {
+      setToast(toastMessage);
+    },
+    isLoggedIn: !isError,
+  };
   return (
-    <AppContext.Provider
-      value={{
-        showToast: (toastMessage) => {
-          setToast(toastMessage);
-        },
-        isLoggedIn: !isError,
-      }}
-    >
+    <AppContext.Provider value={value}>
       {toast && (
         <Toast
           message={toast.message}

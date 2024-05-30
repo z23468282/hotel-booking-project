@@ -1,9 +1,9 @@
 import { RegisterFormData } from './pages/Register';
 import { signInFormData } from './pages/SignIn';
-import { HotelType } from '../../backend/src/shared/types';
+import { HotelSearchResponse, HotelType } from '../../backend/src/shared/types';
 
-// const API_BASE_URL = import.meta.env.API_BASE_URL || '';
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+// const API_BASE_URL = 'http://localhost:3000';
 
 export const register = async (formData: RegisterFormData) => {
   const res = await fetch(`${API_BASE_URL}/api/users/register`, {
@@ -111,6 +111,51 @@ export const updateMyHotelById = async (hotelFormData: FormData) => {
 
   if (!res.ok) {
     throw new Error('更新資料失敗');
+  }
+
+  return res.json();
+};
+
+export type SearchParams = {
+  destination?: string;
+  checkIn?: string;
+  checkOut?: string;
+  adultCount?: string;
+  childCount?: string;
+  page?: string;
+  facilities?: string[];
+  types?: string[];
+  stars?: string[];
+  maxPrice?: string;
+  sortOption?: string;
+};
+
+export const searchHotels = async (
+  searchParams: SearchParams
+): Promise<HotelSearchResponse> => {
+  //將資訊附加到url參數
+  const queryParams = new URLSearchParams();
+  queryParams.append('destination', searchParams.destination || '');
+  queryParams.append('checkIn', searchParams.checkIn || '');
+  queryParams.append('checkOut', searchParams.checkOut || '');
+  queryParams.append('adultCount', searchParams.adultCount || '');
+  queryParams.append('childCount', searchParams.childCount || '');
+  queryParams.append('page', searchParams.page || '');
+
+  queryParams.append('maxPrice', searchParams.maxPrice || '');
+  queryParams.append('sortOption', searchParams.sortOption || '');
+
+  searchParams.facilities?.forEach((facility) =>
+    queryParams.append('facilities', facility)
+  );
+
+  searchParams.types?.forEach((type) => queryParams.append('types', type));
+  searchParams.stars?.forEach((star) => queryParams.append('stars', star));
+
+  const res = await fetch(`${API_BASE_URL}/api/hotels/search?${queryParams}`);
+
+  if (!res.ok) {
+    throw new Error('獲取資料失敗');
   }
 
   return res.json();
