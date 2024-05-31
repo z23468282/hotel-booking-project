@@ -1,10 +1,11 @@
 import { FormEvent, useState } from 'react';
 import { useSearchContext } from '../contexts/SearchContext';
+import { useNavigate } from 'react-router-dom';
 import { MdTravelExplore } from 'react-icons/md';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { zhTW } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate } from 'react-router-dom';
+
 registerLocale('zhTW', zhTW);
 
 const SearchBar = () => {

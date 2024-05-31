@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import * as apiClient from '../api-client';
 import { useAppContext } from '../contexts/AppContext';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 export type signInFormData = {
@@ -19,13 +19,14 @@ const SignIn = () => {
     handleSubmit,
   } = useForm<signInFormData>();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const { mutate } = useMutation(apiClient.signIn, {
     onSuccess: async () => {
       //顯示toast
       showToast({ message: '登入成功', type: '成功' });
       await queryClient.invalidateQueries('validateToken');
-      navigate('/');
+      navigate(location.state?.from?.pathname || '/');
     },
     onError: (error: Error) => {
       //顯示toast

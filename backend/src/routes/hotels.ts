@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import Hotel from '../models/hotel';
 import { HotelSearchResponse } from '../shared/types';
+import { param, validationResult } from 'express-validator';
 
 const router = express.Router();
 
@@ -48,6 +49,27 @@ router.get('/search', async (req: Request, res: Response) => {
     res.status(500).json({ message: '伺服器錯誤' });
   }
 });
+
+router.get(
+  '/:id',
+  [param('id').notEmpty().withMessage('必須有飯店ID')],
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const id = req.params.id.toString();
+
+    try {
+      const hotel = await Hotel.findById(id);
+      res.json(hotel);
+    } catch (error) {
+      res.status(500).json({ message: '伺服器錯誤' });
+    }
+  }
+);
 
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};

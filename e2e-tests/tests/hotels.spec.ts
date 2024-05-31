@@ -29,7 +29,7 @@ test('允許用戶添加酒店', async ({ page }) => {
   await page.selectOption('select[name="starRating"]', '3');
   await page.getByText('汽車旅館').check();
   await page.getByLabel('免費WiFi').check();
-  await page.getByLabel('停車處').check();
+  await page.getByLabel('停車場').check();
 
   await page.locator('[name="adultCount"]').fill('2');
   await page.locator('[name="childCount"]').fill('1');
