@@ -1,9 +1,26 @@
 import { RegisterFormData } from './pages/Register';
 import { signInFormData } from './pages/SignIn';
-import { HotelSearchResponse, HotelType } from '../../backend/src/shared/types';
+import {
+  HotelSearchResponse,
+  HotelType,
+  UserType,
+  paymentIntentResponse,
+} from '../../backend/src/shared/types';
+import { BookingFormData } from './forms/BookingForm/BookingForm';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
 // const API_BASE_URL = 'http://localhost:3000';
+
+export const fetchCurrentUser = async (): Promise<UserType> => {
+  const res = await fetch(`${API_BASE_URL}/api/users/me`, {
+    credentials: 'include',
+  });
+  if (!res.ok) {
+    throw new Error('獲取用戶錯誤');
+  }
+
+  return res.json();
+};
 
 export const register = async (formData: RegisterFormData) => {
   const res = await fetch(`${API_BASE_URL}/api/users/register`, {
@@ -169,4 +186,45 @@ export const fetchHotelById = async (hotelId: string): Promise<HotelType> => {
   }
 
   return res.json();
+};
+
+export const createPaymentIntent = async (
+  hotelId: string,
+  numberOfNights: string
+): Promise<paymentIntentResponse> => {
+  const res = await fetch(
+    `${API_BASE_URL}/api/hotels/${hotelId}/bookings/payment-intent`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({ numberOfNights }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+
+  if (!res.ok) {
+    throw new Error('獲取付款資訊失敗');
+  }
+
+  return res.json();
+};
+
+export const createRoomBooking = async (formData: BookingFormData) => {
+  const response = await fetch(
+    `${API_BASE_URL}/api/hotels/${formData.hotelId}/bookings`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(formData),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error('Error booking room');
+  }
 };
