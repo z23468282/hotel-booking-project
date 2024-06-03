@@ -33,6 +33,15 @@ const SearchBar = () => {
     );
     navigate('/search');
   };
+
+  const handleReset = () => {
+    setDestination('');
+    setCheckIn(minDate);
+    setCheckOut(minDate);
+    setAdultCount(1);
+    setChildCount(0);
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -104,13 +113,14 @@ const SearchBar = () => {
       <div className="flex gap-1">
         <button
           type="submit"
-          className="w-2/3 bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-400"
+          className="w-[200px]  bg-blue-600 text-white h-full p-2 font-bold text-xl hover:bg-blue-400"
         >
           搜 尋
         </button>
         <button
+          onClick={handleReset}
           type="button"
-          className="w-1/3 bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-400"
+          className="w-[110px] bg-red-600 text-white h-full p-2 font-bold text-xl hover:bg-red-400"
         >
           清 除
         </button>
