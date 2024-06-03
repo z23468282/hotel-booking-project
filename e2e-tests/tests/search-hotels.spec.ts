@@ -66,4 +66,6 @@ test('預訂飯店', async ({ page }) => {
 
   await page.getByRole('button', { name: '確定預訂' }).click();
   await expect(page.getByText('預訂資料已儲存')).toBeVisible();
+
+  await expect(page.getByText('e2e測試名稱')).toBeVisible();
 });

@@ -6,7 +6,7 @@ import {
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { StripeCardElement } from '@stripe/stripe-js';
 import { useSearchContext } from '../../contexts/SearchContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation } from 'react-query';
 import * as apiClient from '../../api-client';
 import { useAppContext } from '../../contexts/AppContext';
@@ -32,6 +32,7 @@ export type BookingFormData = {
 const BookingForm = ({ currentUser, paymentIntent }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const { hotelId } = useParams();
   const search = useSearchContext();
@@ -43,6 +44,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
     {
       onSuccess: () => {
         showToast({ message: '預訂資料已儲存', type: '成功' });
+        navigate('/my-bookings');
       },
       onError: () => {
         showToast({ message: '預訂時出錯', type: '錯誤' });
@@ -134,6 +136,7 @@ const BookingForm = ({ currentUser, paymentIntent }: Props) => {
           id="payment-element"
           className="border rounded-md p-2 text-sm"
         />
+        <span className="text-xs">測試卡號 : 4242 4242 4242 4242 </span>
       </div>
 
       <div className="flex justify-end">

@@ -54,6 +54,15 @@ router.get('/search', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find().sort('-lastUpdated');
+    res.json(hotels);
+  } catch (error) {
+    res.status(500).json({ message: '伺服器錯誤' });
+  }
+});
+
 router.get(
   '/:id',
   [param('id').notEmpty().withMessage('必須有飯店ID')],
